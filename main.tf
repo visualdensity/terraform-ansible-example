@@ -67,6 +67,7 @@ resource "azurerm_subnet" "subnets" {
 #########################
 # Gateway VM Setup
 #########################
+
 resource "azurerm_public_ip" "gateway_pub_ip" {
   name                = "${var.project_name}PubIP"
   resource_group_name = azurerm_resource_group.rg.name
@@ -163,7 +164,7 @@ resource "azurerm_linux_virtual_machine" "gateway_vm" {
   size                            = "Standard_B1ls"
   admin_username                  = var.system_user # cannot be "admin" it'll fail
   admin_password                  = var.system_user_password
-  disable_password_authentication = false
+  disable_password_authentication = true
   tags                            = local.tags
 
   admin_ssh_key {
@@ -177,22 +178,22 @@ resource "azurerm_linux_virtual_machine" "gateway_vm" {
   ]
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
+    publisher = var.linux_image_publisher
+    offer     = var.linux_image_offer
+    sku       = var.linux_image_sku
+    version   = var.linux_image_version
   }
 
   os_disk {
-    storage_account_type = "Standard_LRS"
-    caching              = "ReadWrite"
+    caching              = var.disk_caching
+    storage_account_type = var.disk_storage_account_type
   }
 
   connection {
-    type     = "ssh"
-    user     = self.admin_username
+    type        = "ssh"
+    user        = self.admin_username
+    host        = azurerm_public_ip.gateway_pub_ip.ip_address
     private_key = file(var.ssh_key_path_priv)
-    host = azurerm_public_ip.gateway_pub_ip.ip_address
   }
 
   provisioner "remote-exec" {

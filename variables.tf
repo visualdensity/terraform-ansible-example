@@ -46,6 +46,30 @@ variable "subnets" {
   } #default
 } ##subnets
 
+#########################
+# Gateway VM Setup
+#########################
+
+variable "linux_image_publisher" {
+  type = string
+  default = "Canonical"
+}
+
+variable "linux_image_offer" {
+  type = string
+  default = "0001-com-ubuntu-server-focal"
+}
+
+variable "linux_image_sku" {
+  type = string
+  default = "20_04-lts-gen2"
+}
+
+variable "linux_image_version" {
+  type = string
+  default = "latest"
+}
+
 variable "ssh_key_path_pub" {
   type = string
   default = "~/.ssh/id_rsa.pub"
@@ -55,3 +79,14 @@ variable "ssh_key_path_priv" {
   type = string
   default = "~/.ssh/id_rsa"
 }
+
+variable "disk_storage_account_type" {
+  type = string
+  default = "Standard_LRS"
+}
+
+variable "disk_caching" {
+  type = string
+  default = "ReadWrite"
+}
+
