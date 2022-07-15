@@ -1,0 +1,6 @@
+terraform.tfvars
+.terraform*
+*.tfstate
+*.destroy
+*.plan
+*.backup
