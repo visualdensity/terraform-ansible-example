@@ -30,6 +30,7 @@ variable "vnet_address_space" {
   default = ["10.15.0.0/16"]
 }
 
+# Example of use of looop
 variable "subnets" {
   type = map(any)
   default = {

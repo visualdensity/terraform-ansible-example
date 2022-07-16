@@ -57,6 +57,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnets" {
+  # example of use of loops
   for_each = var.subnets
     name                 = each.value["name"]
     address_prefixes     = each.value["address_prefixes"]
