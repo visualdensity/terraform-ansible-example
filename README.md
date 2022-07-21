@@ -13,3 +13,15 @@ like the following:
   terraform/
     main.tf
 ```
+
+## Setup
+To start, please ensure you're logged into Azure using  `az` cli tool
+```
+  az login
+```
+
+And make sure you've set your active session to the right subscription correctly
+```
+  az account set --subscription {subscription_id}
+```
+
